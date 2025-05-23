@@ -11,18 +11,23 @@ class Equacao2GrauLayout(BoxLayout):
         self.padding = 20
         self.spacing = 10
 
-        self.add_widget(Label(text='Equação do 2º Grau: ax² + bx + c = 0', font_size=22))
+        self.add_widget(Label(text='Equação do 2º Grau: ax² + bx + c = 0', font_size=30))
 
-        self.input_a = TextInput(hint_text='Digite o valor de a', input_filter='float', multiline=False)
-        self.input_b = TextInput(hint_text='Digite o valor de b', input_filter='float', multiline=False)
-        self.input_c = TextInput(hint_text='Digite o valor de c', input_filter='float', multiline=False)
+        self.input_a = TextInput(hint_text='Digite o valor de a', input_filter='float', multiline=False, height=40, size_hint_y=None)
+        self.input_b = TextInput(hint_text='Digite o valor de b', input_filter='float', multiline=False, height=40, size_hint_y=None)
+        self.input_c = TextInput(hint_text='Digite o valor de c', input_filter='float', multiline=False, height=40, size_hint_y=None)
         self.add_widget(self.input_a)
         self.add_widget(self.input_b)
         self.add_widget(self.input_c)
 
-        self.btn_calcular = Button(text='Calcular', size_hint=(1, 0.5))
+        self.btn_calcular = Button(text='Calcular', height=40, size_hint_y=None)
         self.btn_calcular.bind(on_press=self.calcular)
-        self.add_widget(self.btn_calcular)
+        self.btn_limpar = Button(text='Limpar', height=40, size_hint_y=None)
+        self.btn_limpar.bind(on_press=self.limpar)
+        botoes_layout = BoxLayout(orientation='horizontal', size_hint=(1, 0.5), spacing=10)
+        botoes_layout.add_widget(self.btn_calcular)
+        botoes_layout.add_widget(self.btn_limpar)
+        self.add_widget(botoes_layout)
 
         self.resultado = Label(text='', font_size=18)
         self.add_widget(self.resultado)
@@ -47,9 +52,16 @@ class Equacao2GrauLayout(BoxLayout):
         except Exception as e:
             self.resultado.text = f"Erro: {str(e)}"
 
+    def limpar(self, instance):
+        self.input_a.text = ''
+        self.input_b.text = ''
+        self.input_c.text = ''
+        self.resultado.text = ''
+
 class Equacao2GrauApp(App):
     def build(self):
-        Window.size = (500, 400)
+        Window.size = (500, 600)
+        Window.clearcolor = (0.0, 0.2, 0.2, 1)
         return Equacao2GrauLayout()
 
 if __name__ == '__main__':
